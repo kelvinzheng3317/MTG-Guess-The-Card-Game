@@ -53,19 +53,3 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-
-/* Start of my CSS styles */
-
-.app {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.card {
-  background-color: blue;
-}
-
-.game-info {
-  background-color: red;
-}

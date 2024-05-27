@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import './App.css'
+import CardInfo from './CardInfo'
 
 // getting random card data from: https://scryfall.com/docs/api/cards/random
 // NOTE THAT THERE IS ALSO AN OPTION TO GET RANDOM COMMANDERS : https://api.scryfall.com/cards/random?q=is%3Acommander
+// Alternative API for card info, currently not being used: https://docs.magicthegathering.io/#api_v1cards_get
 
 function App() {
+  const [guess, setGuess] = React.useState("")
   const [hintNum, setHintNum] = React.useState(1)
   const [card, setCard] = React.useState({
     "object": "card",
@@ -149,24 +152,23 @@ function App() {
   }
 
   function checkGuess() {
-    console.log("Checking guess")
+    if (guess === card.name) {
+      console.log("Correct!!")
+    } else {
+      console.log("Incorrect, try again.")
+    }
   }
 
   return (
     <div className='app'>
-        <div className='card'>
-          <p>{card.name}</p>
-          <p>{card.mana_cost}</p>
-          <img src={card.image_uris.art_crop}/>
-          <p>{card.type_line}</p>
-          <p>{card.oracle_text}</p>
-          {card.power && <p>{card.power + "/" + card.toughness}</p>}
-        </div>
+        <CardInfo card={card} />
         <div className='game-info'>
           <label htmlFor="guess_name">Guess the card name: </label>
-          <input id="guess_name" type="text" onKeyDown={(event) => {
-            if (event.target.charCode == 13) {
+          <input id="guess_name" type="text" onKeyUp={(event) => {
+            if (event.key === "Enter") {
               checkGuess()
+            } else {
+              setGuess(event.target.value)
             }
           }}/>
           <button onClick={checkGuess}>Submit</button>
