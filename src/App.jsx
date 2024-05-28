@@ -206,13 +206,13 @@ function App() {
               <div className='points'><p>+{hintPoints}</p></div>
               <label htmlFor="guess_name">Guess the card name: </label>
             </div>
-            <input id="guess_name" type="text" onKeyUp={(event) => {
-              if (event.key === "Enter") {
-                checkGuess()
-              } else {
-                setGuess(event.target.value)
-              }
-            }}/>
+            <input 
+              id="guess_name" 
+              type="text"
+              value={guess}
+              onChange={event => setGuess(event.target.value)}
+              onKeyUp={(event) => event.key === "Enter" && checkGuess()}
+            />
             <button onClick={checkGuess}>Submit</button>
           </div>
           
