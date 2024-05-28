@@ -9,6 +9,7 @@ import CardInfo from './CardInfo'
 function App() {
   const [guess, setGuess] = React.useState("")
   const [hintPoints, setHintPoints] = React.useState(3)
+  const [guessesLeft, setGuessesLeft] = React.useState(10)
   const [currScore, setCurrScore] = React.useState(0)
   const [highScore, setHighScore] = React.useState(localStorage.getItem("highScore") || 0)
   const [card, setCard] = React.useState({
@@ -167,6 +168,7 @@ function App() {
     getCardData()
     setGuess("")
     setHintPoints(3)
+    setGuessesLeft(10)
   }
 
   function checkGuess() {
@@ -177,6 +179,11 @@ function App() {
       nextCard()
     } else {
       console.log("Incorrect, try again.")
+      setGuessesLeft(prevGuessesLeft => prevGuessesLeft - 1)
+      if (guessesLeft === 0) {
+        // TODO: REVEAL CARD NAME AND PROMPT USER TELLING THEM THEY ARE OUT OF GUESSES
+        nextCard()
+      }
     }
   }
   
@@ -198,7 +205,7 @@ function App() {
           <div>
             <p>High Score: {highScore}</p>
             <p>Current Score: {currScore}</p>
-            <p>Guesses Left: 3</p>
+            <p>Guesses Left: {guessesLeft}</p>
           </div>
 
           <div className='game-input'>

@@ -32,6 +32,11 @@
     position: relative;
 }
 
+.rules-text {
+    padding: 0px 15px;
+    text-align: left;
+}
+
 .stats {
     background-color: inherit;
     opacity: 1;
