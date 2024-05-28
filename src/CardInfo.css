@@ -1,0 +1,45 @@
+.card {
+    background-color: darkgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.card-header, .type-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4%;
+    width: 95%;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 5px 10px;
+    margin: 0px 10px;
+}
+
+.card-img {
+    width: 94%;
+    height: 60%;
+}
+
+.bottom-box {
+    width: 94%;
+    height: 30%;
+    border: 2px solid black;
+    margin: 0px 10px;
+    position: relative;
+}
+
+.stats {
+    background-color: inherit;
+    opacity: 1;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 10%;
+    height: 16%;
+    position: absolute;
+    right: -10px;
+    bottom: -25px;
+}

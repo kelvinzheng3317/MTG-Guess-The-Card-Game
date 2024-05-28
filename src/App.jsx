@@ -8,7 +8,9 @@ import CardInfo from './CardInfo'
 
 function App() {
   const [guess, setGuess] = React.useState("")
-  const [hintNum, setHintNum] = React.useState(1)
+  const [hintPoints, setHintPoints] = React.useState(3)
+  const [currScore, setCurrScore] = React.useState(0)
+  const [highScore, setHighScore] = React.useState(localStorage.getItem("highScore") || 0)
   const [card, setCard] = React.useState({
     "object": "card",
     "id": "acd482ad-ca4a-470f-8a76-14ec7b58316a",
@@ -144,6 +146,16 @@ function App() {
   React.useEffect(() => {
     getCardData()
   }, [])
+
+  React.useEffect(() => {
+    if (currScore > highScore) {
+      setHighScore(currScore)
+    }
+  }, [currScore])
+
+  React.useEffect(() => {
+    localStorage.setItem("highScore", highScore)
+  }, [highScore])
   
   async function getCardData() {
     const response = await fetch("https://api.scryfall.com/cards/random")
@@ -152,27 +164,60 @@ function App() {
   }
 
   function checkGuess() {
+    // TODO: ADD RESPONSIVENESS SO USER CAN TELL "ENTER" DID SOMETHING EVEN IF THEY GOT IT WRONG
     if (guess === card.name) {
       console.log("Correct!!")
+      // update current score & high score
+      setCurrScore(prevScore => prevScore + hintPoints)
+      // set up new card to guess
+      getCardData()
+      setGuess("")
     } else {
       console.log("Incorrect, try again.")
     }
+  }
+  
+  function getNextHint() {
+    // TODO: COMPLETE REST OF FUNCTIONALITY
+    setHintPoints(prevHintPoints => prevHintPoints - 1)
+  }
+
+  function skip() {
+    getCardData()
+    setCurrScore(0)
   }
 
   return (
     <div className='app'>
         <CardInfo card={card} />
         <div className='game-info'>
-          <label htmlFor="guess_name">Guess the card name: </label>
-          <input id="guess_name" type="text" onKeyUp={(event) => {
-            if (event.key === "Enter") {
-              checkGuess()
-            } else {
-              setGuess(event.target.value)
-            }
-          }}/>
-          <button onClick={checkGuess}>Submit</button>
-          <button>Get Next Hint</button>
+
+          <div>
+            <p>High Score: {highScore}</p>
+            <p>Current Score: {currScore}</p>
+            <p>Guesses Left: 3</p>
+          </div>
+
+          <div className='game-input'>
+            <div className='game-input-header'>
+              <div className='points'><p>+{hintPoints}</p></div>
+              <label htmlFor="guess_name">Guess the card name: </label>
+            </div>
+            <input id="guess_name" type="text" onKeyUp={(event) => {
+              if (event.key === "Enter") {
+                checkGuess()
+              } else {
+                setGuess(event.target.value)
+              }
+            }}/>
+            <button onClick={checkGuess}>Submit</button>
+          </div>
+          
+          {/* Should this be its own seperate component? */}
+          <div>
+            <button onClick={getNextHint}>Get Next Hint</button>
+            <button onClick={skip}>Skip</button>
+          </div>
         </div>
     </div>
   )
