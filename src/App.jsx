@@ -163,15 +163,18 @@ function App() {
     setCard(data)
   }
 
+  function nextCard() {
+    getCardData()
+    setGuess("")
+    setHintPoints(3)
+  }
+
   function checkGuess() {
     // TODO: ADD RESPONSIVENESS SO USER CAN TELL "ENTER" DID SOMETHING EVEN IF THEY GOT IT WRONG
     if (guess === card.name) {
       console.log("Correct!!")
-      // update current score & high score
       setCurrScore(prevScore => prevScore + hintPoints)
-      // set up new card to guess
-      getCardData()
-      setGuess("")
+      nextCard()
     } else {
       console.log("Incorrect, try again.")
     }
@@ -179,12 +182,12 @@ function App() {
   
   function getNextHint() {
     // TODO: COMPLETE REST OF FUNCTIONALITY
-    setHintPoints(prevHintPoints => prevHintPoints - 1)
+    setHintPoints(prevHintPoints => prevHintPoints > 1 && prevHintPoints - 1)
   }
 
   function skip() {
-    getCardData()
     setCurrScore(0)
+    nextCard()
   }
 
   return (
@@ -215,7 +218,7 @@ function App() {
           
           {/* Should this be its own seperate component? */}
           <div>
-            <button onClick={getNextHint}>Get Next Hint</button>
+            {hintPoints>1 && <button onClick={getNextHint}>Get Next Hint</button>}
             <button onClick={skip}>Skip</button>
           </div>
         </div>
