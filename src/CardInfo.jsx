@@ -19,7 +19,9 @@ export default function  CardInfo({ card, hintPoints }) {
             <p className='type-line'>{hintPoints < 2 && card.type_line}</p>
             <div className='bottom-box'>
                 <p className='rules-text' style={visibilityStyle}>{card.oracle_text}</p>
-                {card.power && <p className='stats' style={visibilityStyle}>{card.power + "/" + card.toughness}</p>}
+                {card.power && <div className='stats' style={visibilityStyle}>
+                    <p>{card.power + "/" + card.toughness}</p>
+                </div>}
             </div>
         </div>
     )

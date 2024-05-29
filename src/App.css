@@ -10,11 +10,22 @@
 
 .app {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 4fr 5fr;
+}
+
+.notification {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  padding: 15px;
+  border-radius: 20px;
 }
 
 .game-info {
-  background-color: rgb(213, 213, 213);
   font-size: 1.25rem;
   font-weight: 500;
   display: flex;

@@ -5,6 +5,8 @@
     justify-content: center;
     align-items: center;
     padding: 15px;
+    aspect-ratio: 0.714;
+    max-height: 85vh;
 }
 
 .card-header, .type-line {
@@ -20,8 +22,8 @@
 }
 
 .card-img {
+    aspect-ratio: 1.375;
     width: 94%;
-    height: 60%;
 }
 
 .bottom-box {
@@ -38,13 +40,16 @@
 }
 
 .stats {
-    background-color: inherit;
+    background-color: gray;
     opacity: 1;
     border: 2px solid black;
     border-radius: 15px;
-    width: 10%;
+    width: 14%;
     height: 16%;
     position: absolute;
-    right: -10px;
-    bottom: -25px;
+    right: -2%;
+    bottom: -5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
+import Notification from './notification'
 import CardInfo from './CardInfo'
 
 // getting random card data from: https://scryfall.com/docs/api/cards/random
@@ -10,6 +11,7 @@ function App() {
   const [guess, setGuess] = React.useState("")
   const [hintPoints, setHintPoints] = React.useState(2)
   const [guessesLeft, setGuessesLeft] = React.useState(10)
+  const [gameState, setGameState] = React.useState("guessing")
   const [currScore, setCurrScore] = React.useState(0)
   const [highScore, setHighScore] = React.useState(localStorage.getItem("highScore") || 0)
   const [card, setCard] = React.useState({
@@ -157,6 +159,12 @@ function App() {
   React.useEffect(() => {
     localStorage.setItem("highScore", highScore)
   }, [highScore])
+
+  React.useEffect(() => {
+    if (guessesLeft < 1) {
+      loss()
+    }
+  }, [guessesLeft])
   
   async function getCardData() {
     const response = await fetch("https://api.scryfall.com/cards/random")
@@ -175,8 +183,16 @@ function App() {
     // TODO: ADD RESPONSIVENESS SO USER CAN TELL "ENTER" DID SOMETHING EVEN IF THEY GOT IT WRONG
     if (guess.toLowerCase() === card.name.toLowerCase()) {
       console.log("Correct!!")
+      // Display notif and card name
+      setGameState("won")
       setCurrScore(prevScore => prevScore + hintPoints)
-      nextCard()
+
+      // waits 2 secs and then resets game to next card
+      setTimeout(() => {
+        setGameState("guessing")
+        nextCard()
+      }, 2000)
+
     } else {
       console.log("Incorrect, try again.")
       setGuessesLeft(prevGuessesLeft => prevGuessesLeft - 1)
@@ -192,43 +208,46 @@ function App() {
     setHintPoints(prevHintPoints => prevHintPoints > 1 && prevHintPoints - 1)
   }
 
-  function skip() {
-    setCurrScore(0)
-    nextCard()
+  function loss() {
+    setGameState('loss')
+    setTimeout(() => {
+      setCurrScore(0)
+      setGameState("guessing")
+      nextCard()
+    }, 2000)
   }
 
   return (
-    <div className='app'>
-        <CardInfo card={card} hintPoints={hintPoints} />
-        <div className='game-info'>
+    <div>
+      <Notification gameState={gameState} hintPoints={hintPoints} cardName={card.name}/>
+      <div className='app'>
+          <CardInfo card={card} hintPoints={hintPoints} />
+          <div className='game-info'>
 
-          <div>
-            <p>High Score: {highScore}</p>
-            <p>Current Score: {currScore}</p>
-            <p>Guesses Left: {guessesLeft}</p>
-          </div>
-
-          <div className='game-input'>
-            <div className='game-input-header'>
-              <div className='points'><p>+{hintPoints}</p></div>
-              <label htmlFor="guess_name">Guess the card name: </label>
+            <div>
+              <p>High Score: {highScore}</p>
+              <p>Current Score: {currScore}</p>
+              <p>Guesses Left: {guessesLeft}</p>
             </div>
-            <input 
-              id="guess_name" 
-              type="text"
-              value={guess}
-              onChange={event => setGuess(event.target.value)}
-              onKeyUp={(event) => event.key === "Enter" && checkGuess()}
-            />
-            <button onClick={checkGuess}>Submit</button>
+
+            <div className='game-input'>
+              <div className='game-input-header'>
+                <div className='points'><p>+{hintPoints}</p></div>
+                <label htmlFor="guess_name">Guess the card name: </label>
+              </div>
+              <input 
+                id="guess_name" 
+                type="text"
+                value={guess}
+                onChange={event => setGuess(event.target.value)}
+                onKeyUp={(event) => event.key === "Enter" && checkGuess()}
+              />
+              {hintPoints>1 && <button onClick={getNextHint}>Get Next Hint</button>}
+              <button onClick={checkGuess}>Submit</button>
+              <button onClick={loss}>Skip</button>
+            </div>
           </div>
-          
-          {/* Should this be its own seperate component? */}
-          <div>
-            {hintPoints>1 && <button onClick={getNextHint}>Get Next Hint</button>}
-            <button onClick={skip}>Skip</button>
-          </div>
-        </div>
+      </div>
     </div>
   )
 }
