@@ -8,6 +8,12 @@ import GameInput from './GameInput'
 // NOTE THAT THERE IS ALSO AN OPTION TO GET RANDOM COMMANDERS : https://api.scryfall.com/cards/random?q=is%3Acommander
 // Alternative API for card info, currently not being used: https://docs.magicthegathering.io/#api_v1cards_get
 
+/*
+Other potential features:
+- ability to switch btw guessing any card vs guessing commanders only
+- ability to see card price and set as a hint
+*/
+
 function App() {
   const [guess, setGuess] = React.useState("")
   const [hintPoints, setHintPoints] = React.useState(2)
@@ -181,7 +187,6 @@ function App() {
   }
 
   function checkGuess() {
-    // TODO: ADD RESPONSIVENESS SO USER CAN TELL "ENTER" DID SOMETHING EVEN IF THEY GOT IT WRONG
     if (guess.toLowerCase() === card.name.toLowerCase()) {
       console.log("Correct!!")
       // Display notif and card name
@@ -198,14 +203,12 @@ function App() {
       console.log("Incorrect, try again.")
       setGuessesLeft(prevGuessesLeft => prevGuessesLeft - 1)
       if (guessesLeft === 0) {
-        // TODO: REVEAL CARD NAME AND PROMPT USER TELLING THEM THEY ARE OUT OF GUESSES
         nextCard()
       }
     }
   }
   
   function getNextHint() {
-    // TODO: COMPLETE REST OF FUNCTIONALITY
     setHintPoints(prevHintPoints => prevHintPoints > 1 && prevHintPoints - 1)
   }
 
