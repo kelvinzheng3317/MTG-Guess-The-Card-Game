@@ -15,7 +15,7 @@ export default function  CardInfo({ card, hintPoints }) {
     } else {
         switch(card.color_identity[0]) {
             case 'R':
-                color = '#f2e5e0'
+                color = '#ff8b87'
                 break
             case 'G':
                 color = '#a2bcad'

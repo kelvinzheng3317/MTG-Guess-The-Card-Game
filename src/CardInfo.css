@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     height: 4%;
-    width: 95%;
+    width: 96%;
     border: 2px solid black;
     border-radius: 15px;
     padding: 5px 10px;
@@ -25,11 +25,11 @@
 
 .card-img {
     aspect-ratio: 1.375;
-    width: 94%;
+    width: 96%;
 }
 
 .bottom-box {
-    width: 94%;
+    width: 96%;
     height: 30%;
     border: 2px solid black;
     margin: 0px 10px;

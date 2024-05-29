@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import Notification from './notification'
 import CardInfo from './CardInfo'
+import GameInput from './GameInput'
 
 // getting random card data from: https://scryfall.com/docs/api/cards/random
 // NOTE THAT THERE IS ALSO AN OPTION TO GET RANDOM COMMANDERS : https://api.scryfall.com/cards/random?q=is%3Acommander
@@ -229,23 +230,15 @@ function App() {
               <p>Current Score: {currScore}</p>
               <p>Guesses Left: {guessesLeft}</p>
             </div>
-
-            <div className='game-input'>
-              <div className='game-input-header'>
-                <div className='points'><p>+{hintPoints}</p></div>
-                <label htmlFor="guess_name">Guess the card name: </label>
-              </div>
-              <input 
-                id="guess_name" 
-                type="text"
-                value={guess}
-                onChange={event => setGuess(event.target.value)}
-                onKeyUp={(event) => event.key === "Enter" && checkGuess()}
-              />
-              {hintPoints>1 && <button onClick={getNextHint}>Get Next Hint</button>}
-              <button onClick={checkGuess}>Submit</button>
-              <button onClick={loss}>Skip</button>
-            </div>
+            
+            <GameInput 
+              hintPoints={hintPoints} 
+              guess={guess} 
+              setGuess={setGuess}
+              checkGuess={checkGuess}
+              getNextHint={getNextHint}
+              loss={loss}
+            />
           </div>
       </div>
     </div>
