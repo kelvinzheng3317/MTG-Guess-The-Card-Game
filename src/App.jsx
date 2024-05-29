@@ -222,7 +222,7 @@ function App() {
     <div>
       <Notification gameState={gameState} hintPoints={hintPoints} cardName={card.name}/>
       <div className='app'>
-          <CardInfo card={card} hintPoints={hintPoints} />
+          <CardInfo card={card} hintPoints={hintPoints} gameState={gameState}/>
           <div className='game-info'>
 
             <div>
@@ -230,7 +230,7 @@ function App() {
               <p>Current Score: {currScore}</p>
               <p>Guesses Left: {guessesLeft}</p>
             </div>
-            
+
             <GameInput 
               hintPoints={hintPoints} 
               guess={guess} 

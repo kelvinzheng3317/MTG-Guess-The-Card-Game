@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './CardInfo.css'
 
-export default function  CardInfo({ card, hintPoints }) {
+export default function  CardInfo({ card, hintPoints, gameState }) {
     CardInfo.propTypes = {
         card: PropTypes.object
     } 
@@ -38,8 +38,8 @@ export default function  CardInfo({ card, hintPoints }) {
     return (
         <div className='card' style={{backgroundColor: color}}>
             <div className='card-header'>
-                <p>{card.name}</p>
-                <p>{card.mana_cost}</p>
+                <p>{gameState != "guessing" && card.name}</p>
+                <p>{hintPoints < 2 && card.mana_cost}</p>
             </div>
             <img className='card-img' src={card.image_uris.art_crop}/>
             <p className='type-line'>{hintPoints < 2 && card.type_line}</p>
