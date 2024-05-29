@@ -12,6 +12,7 @@ import GameInput from './GameInput'
 Other potential features:
 - ability to switch btw guessing any card vs guessing commanders only
 - ability to see card price and set as a hint
+- make player score more points if they use less guesses
 */
 
 function App() {
