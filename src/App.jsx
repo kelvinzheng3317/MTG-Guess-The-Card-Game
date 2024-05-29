@@ -8,7 +8,7 @@ import CardInfo from './CardInfo'
 
 function App() {
   const [guess, setGuess] = React.useState("")
-  const [hintPoints, setHintPoints] = React.useState(3)
+  const [hintPoints, setHintPoints] = React.useState(2)
   const [guessesLeft, setGuessesLeft] = React.useState(10)
   const [currScore, setCurrScore] = React.useState(0)
   const [highScore, setHighScore] = React.useState(localStorage.getItem("highScore") || 0)
@@ -167,13 +167,13 @@ function App() {
   function nextCard() {
     getCardData()
     setGuess("")
-    setHintPoints(3)
+    setHintPoints(2)
     setGuessesLeft(10)
   }
 
   function checkGuess() {
     // TODO: ADD RESPONSIVENESS SO USER CAN TELL "ENTER" DID SOMETHING EVEN IF THEY GOT IT WRONG
-    if (guess === card.name) {
+    if (guess.toLowerCase() === card.name.toLowerCase()) {
       console.log("Correct!!")
       setCurrScore(prevScore => prevScore + hintPoints)
       nextCard()
@@ -199,7 +199,7 @@ function App() {
 
   return (
     <div className='app'>
-        <CardInfo card={card} />
+        <CardInfo card={card} hintPoints={hintPoints} />
         <div className='game-info'>
 
           <div>
