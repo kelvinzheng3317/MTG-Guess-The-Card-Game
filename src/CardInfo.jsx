@@ -7,7 +7,7 @@ export default function  CardInfo({ card, hintPoints, gameState }) {
         card: PropTypes.object
     } 
 
-    let visibilityStyle={visibility: hintPoints === 2 ? "hidden" : "visible"}
+    let showHint = hintPoints < 2 || gameState != "guessing"
 
     let color = 'gray'
     if (card.color_identity.length === 0) {
@@ -39,14 +39,14 @@ export default function  CardInfo({ card, hintPoints, gameState }) {
         <div className='card' style={{backgroundColor: color}}>
             <div className='card-header'>
                 <p>{gameState != "guessing" && card.name}</p>
-                <p>{hintPoints < 2 && card.mana_cost}</p>
+                <p>{showHint && card.mana_cost}</p>
             </div>
             <img className='card-img' src={card.image_uris.art_crop}/>
-            <p className='type-line'>{hintPoints < 2 && card.type_line}</p>
+            <p className='type-line'>{showHint && card.type_line}</p>
             <div className='bottom-box'>
-                <p className='rules-text' style={visibilityStyle}>{card.oracle_text}</p>
-                {card.power && <div className='stats' style={{...visibilityStyle, backgroundColor: color}} >
-                    <p>{card.power + "/" + card.toughness}</p>
+                <p className='rules-text' style={{visibility: showHint ? "visible" : "hidden"}}>{card.oracle_text}</p>
+                {card.power && <div className='stats' style={{backgroundColor: color}} >
+                    <p style={{visibility: showHint ? "visible" : "hidden"}}>{card.power + "/" + card.toughness}</p>
                 </div>}
             </div>
         </div>
